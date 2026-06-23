@@ -1,0 +1,129 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8086/subscription
+  description: Generated server url
+tags:
+- name: User
+  description: Управление пользователями и их подписками
+paths:
+  /api/v1/users/{user_name}:
+    get:
+      tags:
+      - User
+      summary: Получить пользователя по имени
+      operationId: getUserByName
+      parameters:
+      - name: user_name
+        in: path
+        description: Имя пользователя
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Пользователь успешно получен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+        "400":
+          description: Введены не корректные данные
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageDto"
+        "404":
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageDto"
+    patch:
+      tags:
+      - User
+      summary: Обновить время подписки для пользователя
+      operationId: updateSubscriptionForUser
+      parameters:
+      - name: user_name
+        in: path
+        description: Имя пользователя
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Подписка обновлена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+        "400":
+          description: Введены не корректные данные
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageDto"
+        "404":
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageDto"
+  /api/v1/users/{user_name}/type/{subscription_type}:
+    patch:
+      tags:
+      - User
+      summary: Изменить тип подписки пользователя
+      operationId: editTypeSubscriptionForUser
+      parameters:
+      - name: user_name
+        in: path
+        description: Имя пользователя
+        required: true
+        schema:
+          type: string
+      - name: subscription_type
+        in: path
+        description: Целевой тип подписки
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Тип успешно изменен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDto"
+        "400":
+          description: Введены не корректные данные
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageDto"
+        "404":
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageDto"
+components:
+  schemas:
+    UserResponseDto:
+      type: object
+      properties:
+        name:
+          type: string
+        subscriptionType:
+          type: string
+          enum:
+          - PAID
+          - FREE
+        endDate:
+          type: string
+          format: date
+    ErrorMessageDto:
+      type: object

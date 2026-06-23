@@ -1,0 +1,14 @@
+server:
+  servlet:
+    context-path: /subscription
+
+  scheduled:
+    cronCheckSubscription: "0 0 3 * * *"
+
+spring:
+  application:
+    name: subscription
+
+  kafka:
+    producer:
+      topicCache: subscription-invalidate-cache
