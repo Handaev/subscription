@@ -1,0 +1,28 @@
+server:
+  servlet:
+    context-path: /subscription
+  port: 8086
+
+  scheduled:
+    cronCheckSubscription: "0 0 3 * * *"
+
+spring:
+  application:
+    name: subscription
+
+  datasource:
+    url: jdbc:postgresql://localhost:5435/subscription
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      topicCache: subscription-invalidate-cache

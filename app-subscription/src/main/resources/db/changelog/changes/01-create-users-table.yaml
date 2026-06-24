@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260620-02
+      author: wrestler
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: subscription_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: date
+                  constraints:
+                    nullable: true
